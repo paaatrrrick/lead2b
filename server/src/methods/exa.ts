@@ -1,13 +1,16 @@
 import Exa from "exa-js"
 
-const exa = new Exa("f4b2ba96-8f67-4134-9f01-22ed89f7dfd0")
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 
-async function searchForLatestTechNews(search : string, num: number) {
+const exa = new Exa(process.env.exa_key);
+
+async function searchForLinks(search : string, num: number) {
     try {
         const searchOptions = {
             numResults: num
         }
-
 
         // Perform the search
         const response = await exa.search(search, searchOptions);      
@@ -19,5 +22,5 @@ async function searchForLatestTechNews(search : string, num: number) {
     }
 }
 
-export default searchForLatestTechNews;
+export default searchForLinks;
   
