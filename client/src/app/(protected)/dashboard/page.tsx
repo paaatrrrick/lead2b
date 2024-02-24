@@ -7,6 +7,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import Navbar from '../../../components/Navbar';
 import AgGrid from '../../../components/AgGrid';
+import NewSheetForm from '../../../components/NewSheetForm';
 
 export default function Profile() {
     const [items, setItems] = useState<GridItem[]>([]);
@@ -93,7 +94,7 @@ export default function Profile() {
             <div className='flex flex-col h-screen w-full justify-center p-[40px]'>
                 <button onClick={sendDataToServer}>Populate</button>
                 {
-                    isNewSheet ? <div>Hello World</div> : <AgGrid rowData={rowData} colDefs={colDefs}/>
+                    isNewSheet ? <NewSheetForm/> : <AgGrid rowData={rowData} colDefs={colDefs}/>
                 }
             </div>
         </div>

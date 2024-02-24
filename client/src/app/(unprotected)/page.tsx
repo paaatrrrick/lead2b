@@ -1,10 +1,12 @@
-'use client';
 import React from 'react';
+import LandingMain from "@/components/LandingMain";
+
 
 export default function Home() {
-    return (
-    <div className='w-full flex justify-center items-center'>
-      <h1>asdfsd</h1>
+
+  return (
+    <div className='bg-darkColor'>
+      <LandingMain/>
     </div>
   );
 }
