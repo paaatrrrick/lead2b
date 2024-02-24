@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+/* Waves for Login Page */
+
+.custom-shape-divider-bottom-1674142871 {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1674142871 svg {
+    position: relative;
+    display: block;
+    width: calc(137% + 1.3px);
+    height: 237px;
+    transform: rotateY(180deg);
+    background-color: #fff;
+
+}
+
+
+ /* Alert */
+
+.alertComponentWrapper{
+    top: 60px;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    z-index: 50;
+    width: 50%;
+    max-width: 600px;
+    min-width: min(95%, 120px);
+}
+
+
+/* loader */
+
+.loader {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    background: linear-gradient(0deg, var(--colors-brandColor-100) 33%, var(--colors-brandColor-600) 100%);
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  .loader::after {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+  }
+  @keyframes rotation {
+    0% { transform: rotate(0deg) }
+    100% { transform: rotate(360deg)}
+  } 
+  
+  .full-screen-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+  }
+  
