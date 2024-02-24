@@ -1,26 +1,31 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+import axios from 'axios';
+import * as cheerio from 'cheerio';
 
-async function getWebsiteHTML(url) {
+async function getWebsiteHTML(url: string): Promise<string | null> {
   try {
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
     $('script').remove();
     $('style').remove();
     $('link[rel="stylesheet"]').remove();
+    $('noscript').remove();
     const textContent = $('body').text();
-    return textContent;
+    // Remove all extra white spaces and trim the text
+    console.log('-----------------------------------');
+    return textContent.replace(/\s+/g, ' ').trim();
   } catch (error) {
     console.error('Error fetching website HTML:', error);
     return null;
   }
 }
 
-const url = 'https://www.freecodecamp.org/news/how-to-scrape-websites-with-node-js-and-cheerio/';
-getWebsiteHTML(url)
-  .then(html => {
-    console.log(html);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+export default getWebsiteHTML;
+
+
+// const webpages = [];
+// webpages.push('https://www.freecodecamp.org/news/how-to-scrape-websites-with-node-js-and-cheerio/');
+// webpages.push('https://github.com/paaatrrrick/lead2b/pull/1');
+// webpages.push('https://futurestud.io/tutorials/remove-all-whitespace-from-a-string-in-javascript');
+// for (let i = 0; i < webpages.length; i++) {
+//   getWebsiteHTML(webpages[i]).then(console.log);
+// }
