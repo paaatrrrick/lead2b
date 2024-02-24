@@ -2,6 +2,7 @@
 import React from 'react';
 // import { Inconsolata } from '@next/font/google';
 
+
 const LandingMain = () => {
   return (
     <div className="bg-darkColor">
