@@ -5,6 +5,7 @@ try {
   
 interface Constants {
     serverUrl: string;
+    webSocketUrl: string;
     isLocal: boolean;
     errorTimeout: number;
     routes: Routes;
@@ -28,7 +29,8 @@ interface Endpoints {
 }
 
 const constants : Constants = {
-  serverUrl: isLocal ? "http://localhost:4500" : "https://lead2b.up.railway.app/",
+  serverUrl: isLocal ? "http://localhost:4500" : "https://lead2b.up.railway.app",
+  webSocketUrl: isLocal ? "ws://localhost:4500" : "wss://lead2b.up.railway.app",
   isLocal: isLocal,
   errorTimeout: 7500,
   routes: {

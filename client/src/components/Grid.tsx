@@ -37,7 +37,7 @@ export default function Grid({ id }: { id: string}) {
 
     // temporary placeholder for grid items and headers
     useEffect(() => {
-        const ws = new WebSocket('ws://localhost:4500');
+        const ws = new WebSocket(constants.webSocketUrl);
     
         const griditems : GridItem[] = [];
 
@@ -55,7 +55,7 @@ export default function Grid({ id }: { id: string}) {
 
         getData(ws);
         return () => ws.close();
-    }, []);
+    }, [id]);
 
     // myWS?.send(JSON.stringify({ type: 'create', rows: 3, headers: ['AI education startups', 'Company name']}));
 
