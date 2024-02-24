@@ -9,15 +9,17 @@ const findValueInText = async (text, query) : Promise<string> =>{
         try {
             const completion = await openai.chat.completions.create({
             temperature: 0,
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-16k",
             messages: [
             { role: "system", content: "You are a helpful assistant." },
             { role: "user", content: `Text: ${text}` },
-            { role: "user", content: `Find the answer to: ${query} and give a very short answer. If you feel like the text does not reasonably answer the question, return N/A` }],
+            { role: "user", content: `Given the text: "${text}", find the answer to the following query: "${query}". Provide a very short answer of your best guess to the answer. If the text absolutely does not answer the question, return "N/A".` }
+            ]
         });
     
+
         const answer = (completion.choices[0].message.content);
-        console.log(`Answer: ${answer}`);
+        // console.log(`Answer: ${answer}`);
         return answer;
 
         } catch (error) {

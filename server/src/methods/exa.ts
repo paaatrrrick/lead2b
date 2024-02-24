@@ -16,7 +16,7 @@ async function searchForLinks(search : string, num: number) {
         const response = await exa.search(search, searchOptions);      
         // Log the search results
         const results = [];
-        console.log('Search Results:', response.results);
+        // console.log('Search Results:', response.results);
         for (let i = 0; i < response.results.length; i++) {
             results.push(response.results[i].url);
         }

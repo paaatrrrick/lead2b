@@ -63,7 +63,10 @@ export default class Api {
             ws.on('message', message => {
                 var json = JSON.parse(message.toString());
                 if (json.type === "create") {
-                    createGraph(json.id, ws);       
+                    const rows : number = json.rows; 
+                    const headers : string[] = json.headers;
+                    const firstHeader : string = headers.shift();
+                    createGraph(rows, headers, firstHeader, ws, 5);
                 }
             });
             ws.on('close', () => {

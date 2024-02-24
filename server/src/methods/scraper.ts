@@ -9,9 +9,10 @@ async function getWebsiteHTML(url: string): Promise<string | null> {
     $('style').remove();
     $('link[rel="stylesheet"]').remove();
     $('noscript').remove();
-    const textContent = $('body').text();
+    const textContent = $('body').html();
     // Remove all extra white spaces and trim the text
-    console.log('-----------------------------------');
+    // console.log('-----------------------------------');
+    // console.log(textContent.replace(/\s+/g, ' ').trim());
     return textContent.replace(/\s+/g, ' ').trim();
   } catch (error) {
     console.error('Error fetching website HTML:', error);
