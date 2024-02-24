@@ -5,12 +5,13 @@ import { GridItem } from '../../../types/grid';
 import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
-import { AgGridReact } from 'ag-grid-react';
 import Navbar from '../../../components/Navbar';
+import AgGrid from '../../../components/AgGrid';
 
 export default function Profile() {
     const [items, setItems] = useState<GridItem[]>([]);
     const [headers, setHeaders] = useState<string[]>([]);
+    const [isNewSheet, setIsNewSheet] = useState<boolean>(true);
 
     const setOfLinkSynonyms = new Set(['url', 'linkedin', 'github', 'portfolio', 'website', 'link', 'links', 'site']) 
 
@@ -65,14 +66,11 @@ export default function Profile() {
 
     return (
         <div className='flex'>
-            <Navbar sheets={[{name: 'Sheet 1', id: 0}, {name: 'Sheet 2', id: 1}]} />
+            <Navbar sheets={[{name: 'Sheet 1', id: 0}, {name: 'Sheet 2', id: 1}]} setIsNewSheet={setIsNewSheet}/>
             <div className='flex flex-col h-screen w-full justify-center p-36'>
-                <div className='ag-theme-quartz-dark' style={{ height: '100%', width: '100%' }}>
-                    <AgGridReact
-                        rowData={rowData}
-                        columnDefs={colDefs}
-                    />
-                </div>
+                {
+                    isNewSheet ? <div>Hello World</div> : <AgGrid rowData={rowData} colDefs={colDefs}/>
+                }
             </div>
         </div>
     )
