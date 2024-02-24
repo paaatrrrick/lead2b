@@ -6,6 +6,7 @@ import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
+import Navbar from '../../../components/Navbar';
 
 export default function Profile() {
     const [items, setItems] = useState<GridItem[]>([]);
@@ -53,8 +54,9 @@ export default function Profile() {
     });
 
     return (
-        <div className='flex flex-col'>
-            <div className='flex flex-col h-screen w-full justify-center'>
+        <div className='flex'>
+            <Navbar />
+            <div className='flex flex-col h-screen w-full justify-center p-36'>
                 <div className='ag-theme-quartz-dark' style={{ height: '100%', width: '100%' }}>
                     <AgGridReact
                         rowData={rowData}
