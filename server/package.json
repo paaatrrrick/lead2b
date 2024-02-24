@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "lead2b",
   "version": "1.0.0",
-  "description": "boilerplate code for Patricks projects",
+  "description": "lead2b for hackillinois",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
