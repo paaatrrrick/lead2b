@@ -7,8 +7,6 @@ import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
 import AuthRouter from './routes/auth';
 import mongoose from 'mongoose';
-import getWebsiteHTML from './methods/scraper';
-import findValueInText from './methods/chat';
 
 export default class Api {
     private port: number;
@@ -41,8 +39,6 @@ export default class Api {
         db.on("error", console.error.bind(console, "connection error:"));
         db.once("open", () => {
             console.log("💀 Mongo connection successful");
-            const text = getWebsiteHTML("https://www.freecodecamp.org/news/how-to-scrape-websites-with-node-js-and-cheerio/");
-            findValueInText(text, "What is Citadel?");
         });
 
         const app = express();
