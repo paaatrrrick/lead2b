@@ -1,8 +1,11 @@
 import React from 'react';
+import LandingMain from "@/components/LandingMain";
+
 
 export default function Home() {
   return (
-    <div className='w-full flex justify-center items-center'>
+    <div>
+      <LandingMain />
     </div>
   );
 }
