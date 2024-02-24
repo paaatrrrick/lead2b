@@ -10,30 +10,53 @@ import AgGrid from '../../../components/AgGrid';
 
 export default function Profile() {
     const [items, setItems] = useState<GridItem[]>([]);
+    const [myWS, setWS] = useState<WebSocket>();
     const [headers, setHeaders] = useState<string[]>([]);
     const [isNewSheet, setIsNewSheet] = useState<boolean>(true);
 
     const setOfLinkSynonyms = new Set(['url', 'linkedin', 'github', 'portfolio', 'website', 'link', 'links', 'site']) 
 
     // @pfoster use these functions to set the grid items and headers
-    function setGridItems(gridItems: GridItem[]) {
-        setItems(gridItems);
-    }
-
     function setGridHeaders(gridHeaders: string[]) {
         setHeaders(gridHeaders);
     }
 
     // temporary placeholder for grid items and headers
     useEffect(() => {
-        setGridItems([
+        setItems([
             { value: 'https://github.com/liaozhuzhu', r: 0, c: 'URL' },
-            { value: 'Zhu', r: 0, c: 'feature2' },
             { value: 'https://www.linkedin.com/in/liao-zhu/', r: 1, c: 'URL' },
-            { value: 'Life', r: 1, c: 'feature2' },
+            // {"value":"N/A","r":1,"c":"CEO name"},
         ]);
-        setGridHeaders(['URL', 'feature2']);
+        setGridHeaders(['URL', 'Company name']);
+
+        const ws = new WebSocket('ws://localhost:4500');
+
+        setWS(ws);
+
+        ws.onopen = () => {
+          console.log('Connected to the server');
+        };
+
+        const griditems : GridItem[] = [];
+    
+        ws.onmessage = (event) => {
+            console.log('Message from server:', event.data);
+            const json = JSON.parse(event.data);
+            if (!json.type) return;
+            if (json.type === 'newItems') {
+                for (let item of json.value) {
+                    griditems.push(item);
+                }
+                setItems([...griditems]);
+            }
+        };
+        return () => ws.close();
     }, []);
+
+    const sendDataToServer = () => {
+        myWS?.send(JSON.stringify({ type: 'create', rows: 3, headers: ['AI education startups', 'Company name']}));
+    }
 
     function LinkComponent(props: ICellRendererParams) {
         return (
@@ -63,11 +86,12 @@ export default function Profile() {
         row[item.c] = item.value;
         rowData[item.r] = row;
     });
-
+    
     return (
         <div className='flex'>
             <Navbar sheets={[{name: 'Sheet 1', id: 0}, {name: 'Sheet 2', id: 1}]} setIsNewSheet={setIsNewSheet}/>
-            <div className='flex flex-col h-screen w-full justify-center p-36'>
+            <div className='flex flex-col h-screen w-full justify-center p-[40px]'>
+                <button onClick={sendDataToServer}>Populate</button>
                 {
                     isNewSheet ? <div>Hello World</div> : <AgGrid rowData={rowData} colDefs={colDefs}/>
                 }

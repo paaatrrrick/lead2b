@@ -9,7 +9,8 @@ const exa = new Exa(process.env.exa_key);
 async function searchForLinks(search : string, num: number) {
     try {
         const searchOptions = {
-            numResults: num
+            numResults: num,
+            useAutoprompt: true
         }
 
         const response = await exa.search(search, searchOptions);      

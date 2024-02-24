@@ -9,6 +9,7 @@ import AuthRouter from './routes/auth';
 import mongoose from 'mongoose';
 import { createServer } from 'http'; // Use createServer for clearer semantics
 import { WebSocketServer } from 'ws';
+import createGraph from './methods/websocket';
 
 
 export default class Api {
@@ -57,11 +58,15 @@ export default class Api {
         // Set up WebSocket server on the same port
         const wss = new WebSocketServer({ server });
         wss.on('connection', ws => {
-            ws.send('Welcome! You are connected.');
-
             ws.on('message', message => {
-                console.log('Received: %s', message);
-                ws.send('Welcome! You are connected.');
+                var json = JSON.parse(message.toString());
+                console.log(json);
+                if (json.type === "create") {
+                    const rows : number = json.rows; 
+                    const headers : string[] = json.headers;
+                    const firstHeader : string = headers.shift();
+                    createGraph(rows, headers, firstHeader, ws);       
+                }
             });
 
             ws.on('close', () => {
