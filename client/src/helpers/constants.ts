@@ -19,8 +19,10 @@ interface Routes {
   dashboard: string;
 }
 
-interface Endpoints {}
-
+interface Endpoints {
+  emailSignUp: string;
+  googleSignUp: string;
+}
 
 //TODO_UPDATE_THIS: Update the serverUrl to your server url
 const constants : Constants = {
@@ -34,7 +36,10 @@ const constants : Constants = {
     home: "/",
     dashboard: "/dashboard",
   },
-  endpoints: {}
+  endpoints: {
+    emailSignUp: "/auth/email-signup",
+    googleSignUp: "/auth/google-signup",
+  }
 };
 
 export default constants;
