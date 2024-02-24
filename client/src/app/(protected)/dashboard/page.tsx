@@ -55,7 +55,7 @@ export default function Profile() {
     return (
         <div className='flex flex-col'>
             <div className='flex flex-col h-screen w-full justify-center'>
-                <div className='ag-theme-quartz' style={{ height: '100%', width: '100%' }}>
+                <div className='ag-theme-quartz-dark' style={{ height: '100%', width: '100%' }}>
                     <AgGridReact
                         rowData={rowData}
                         columnDefs={colDefs}
