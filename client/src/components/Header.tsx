@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/Button'
-import logo from '@/images/logo192.png'
+import logo from '@/images/sheetz.png'
 import Image from 'next/image';
 import { fireBaseAuth } from '@/helpers/firebase';
 import { onAuthStateChanged } from "firebase/auth";
@@ -113,17 +113,23 @@ export function Header() {
     <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
-            <Link href="#" aria-label="Home">
+            <Link href="/" aria-label="Home" className='flex justify-center items-center gap-2'>
               <Image
                 className='h-10 w-auto hover:cursor-pointer'
                 alt='asdf'
                 src={logo}
                 onClick={() => {logoClicked()}}
               />
+              <strong>sheetz</strong>
             </Link>
             <div className="hidden md:flex md:gap-x-6">
               {pages.map((page, index) => (
-                <Link href={page.href} key={index} className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+                <Link
+                  href={page.href}
+                  key={index}
+                  className="relative inline-block rounded-lg p-4 text-md text-zinc-500 transition duration-500 ease-in-out hover:text-zinc-800 hover:font-bold"
+                  style={{ position: "relative" }}
+                >
                   {page.name}
                 </Link>
               ))}
@@ -131,8 +137,8 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              {isAuthenticated && <button className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" onClick={() => {signOut(fireBaseAuth)}}>Logout</button>}
-              {!isAuthenticated && <Link href="/login" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">Log in</Link>}
+              {isAuthenticated && <button className="inline-block rounded-lg p-4 transition duration-400 text-md text-zinc-500 transition duration-500 ease-in-out hover:text-zinc-800 hover:font-bold" onClick={() => {signOut(fireBaseAuth)}}>Logout</button>}
+              {!isAuthenticated && <Link href="/login" className="inline-block rounded-lg p-4 transition duration-400 text-md text-zinc-500 transition duration-500 ease-in-out hover:text-zinc-800 hover:font-bold">Log in</Link>}
             </div>
             {(isAuthenticated && profilePicture) && 
             <img 

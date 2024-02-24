@@ -1,7 +1,7 @@
 {
-  "name": "lead2b",
+  "name": "sheetz",
   "version": "1.0.0",
-  "description": "lead2b for hackillinois",
+  "description": "sheetz for hackillinois",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
