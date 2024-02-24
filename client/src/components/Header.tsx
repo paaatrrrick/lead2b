@@ -10,6 +10,7 @@ import constants from "@/helpers/constants";
 import { signOut } from "firebase/auth";
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
+import '../styles/styles.css'
 
 
 const pages = [
@@ -109,7 +110,7 @@ export function Header() {
     }
 
   return (
-    <header className="py-10">
+    <header className="py-10 fixed z-50 top-0 left-0 right-0 b-[auto] blurred-container">
     <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
@@ -120,14 +121,14 @@ export function Header() {
                 src={logo}
                 onClick={() => {logoClicked()}}
               />
-              <strong>sheetz</strong>
+              <strong className='text-white text-[1.5rem]'>sheetz</strong>
             </Link>
             <div className="hidden md:flex md:gap-x-6">
               {pages.map((page, index) => (
                 <Link
                   href={page.href}
                   key={index}
-                  className="relative inline-block rounded-lg p-4 text-md text-zinc-500 transition duration-500 ease-in-out hover:text-zinc-800 hover:font-bold"
+                  className="relative inline-block rounded-lg p-4 text-[1rem] text-zinc-500 transition duration-400 ease-in-out hover:text-zinc-300 glow"
                   style={{ position: "relative" }}
                 >
                   {page.name}
@@ -137,8 +138,8 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              {isAuthenticated && <button className="inline-block rounded-lg p-4 transition duration-400 text-md text-zinc-500 transition duration-500 ease-in-out hover:text-zinc-800 hover:font-bold" onClick={() => {signOut(fireBaseAuth)}}>Logout</button>}
-              {!isAuthenticated && <Link href="/login" className="inline-block rounded-lg p-4 transition duration-400 text-md text-zinc-500 transition duration-500 ease-in-out hover:text-zinc-800 hover:font-bold">Log in</Link>}
+              {isAuthenticated && <button className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300" onClick={() => {signOut(fireBaseAuth)}}>Logout</button>}
+              {!isAuthenticated && <Link href="/login" className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300">Log in</Link>}
             </div>
             {(isAuthenticated && profilePicture) && 
             <img 
@@ -147,12 +148,7 @@ export function Header() {
               alt="Profile Picture" 
               onClick={() => {window.location.href = constants.routes.defaultAuthenticatedRoute}}
             />}
-            {!isAuthenticated && 
-            <Button href={'/signup'} color="brandColor">
-              <span>
-                Sign{' '}<span className="hidden lg:inline">Up</span>
-              </span>
-            </Button>}
+            {!isAuthenticated && <Link href="/signup" className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300">Sign Up</Link>}
             <div className="-mr-1 md:hidden">
               <MobileNavigation isAuthenticated={isAuthenticated}/>
             </div>

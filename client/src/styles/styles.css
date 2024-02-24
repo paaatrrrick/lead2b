@@ -1,0 +1,16 @@
+ .blurred-container {
+    background: rgba(38, 33, 45, 0.5);
+     /* RGBA color with alpha channel for transparency */
+     backdrop-filter: blur(10px);
+     /* Adjust the blur radius as needed */
+     padding: 20px;
+     /* Add padding to see the effect more clearly */
+ }
+
+
+.glow:hover {
+    color: #fff;
+    text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
+    text-align: center;
+    transition: 0.25s;
+}
