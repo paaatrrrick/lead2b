@@ -7,6 +7,9 @@ import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
 import AuthRouter from './routes/auth';
 import mongoose from 'mongoose';
+import { createServer } from 'http'; // Use createServer for clearer semantics
+import { WebSocketServer } from 'ws';
+
 
 export default class Api {
     private port: number;
@@ -42,18 +45,33 @@ export default class Api {
         });
 
         const app = express();
-        app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }))
-        app.use(cors({credentials: true, origin: this.clientUrl}));
+        app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }));
+        app.use(cors({ credentials: true, origin: this.clientUrl }));
         app.use(cookieParser());
         app.use(`/auth`, AuthRouter);
         app.use(this.error());
 
-        let PORT: number | string = process.env.PORT;
-        if (PORT == null || PORT == "") {
-            PORT = this.port;
-        }
-        app.listen(PORT, () => {
-            return console.log(`🙀 We're live: ${PORT}`);
+        // Create an HTTP server and wrap the express app
+        const server = createServer(app);
+
+        // Set up WebSocket server on the same port
+        const wss = new WebSocketServer({ server });
+        wss.on('connection', ws => {
+            ws.send('Welcome! You are connected.');
+
+            ws.on('message', message => {
+                console.log('Received: %s', message);
+                ws.send('Welcome! You are connected.');
+            });
+
+            ws.on('close', () => {
+                console.log('Client disconnected.');
+            });
+        });
+
+        let PORT: number | string = process.env.PORT || this.port;
+        server.listen(PORT, () => {
+            console.log(`🙀 We're live and listening for WebSocket connections on port: ${PORT}`);
         });
     }
 
