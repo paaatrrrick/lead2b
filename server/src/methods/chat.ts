@@ -12,7 +12,7 @@ async function findValueInText(text, query) {
         messages: [
           { role: "system", content: "You are a helpful assistant." },
           { role: "user", content: `Text: ${text}` },
-          { role: "user", content: `Find the answer to: ${query}` }],
+          { role: "user", content: `Find the answer to: ${query}. If you feel like the text does not reasonably answer the question, print N/A` }],
       });
   
       const answer = (completion.choices[0].message.content);
