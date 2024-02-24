@@ -1,0 +1,2 @@
+const text = getWebsiteHTML("https://www.freecodecamp.org/news/how-to-scrape-websites-with-node-js-and-cheerio/");
+findValueInText(text, "What is Cheerio?");
