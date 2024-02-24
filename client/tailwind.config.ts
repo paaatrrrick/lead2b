@@ -31,6 +31,7 @@ const config: Config = {
       DEFAULT: {
         colors: {
           'brandColor': '#6500E5',
+          'brandHoverColor': '#6500F0',
           'darkColor': '#26212D',
           'mediumDarkColor': '#32283E',
           'grayColor': '#C5BFCD',

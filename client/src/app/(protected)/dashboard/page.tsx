@@ -14,14 +14,24 @@ export default function Profile() {
 
     const setOfLinkSynonyms = new Set(['url', 'linkedin', 'github', 'portfolio', 'website', 'link', 'links', 'site']) 
 
+    // @pfoster use these functions to set the grid items and headers
+    function setGridItems(gridItems: GridItem[]) {
+        setItems(gridItems);
+    }
+
+    function setGridHeaders(gridHeaders: string[]) {
+        setHeaders(gridHeaders);
+    }
+
+    // temporary placeholder for grid items and headers
     useEffect(() => {
-        setItems([
+        setGridItems([
             { value: 'https://github.com/liaozhuzhu', r: 0, c: 'URL' },
             { value: 'Zhu', r: 0, c: 'feature2' },
             { value: 'https://www.linkedin.com/in/liao-zhu/', r: 1, c: 'URL' },
             { value: 'Life', r: 1, c: 'feature2' },
         ]);
-        setHeaders(['URL', 'feature2']);
+        setGridHeaders(['URL', 'feature2']);
     }, []);
 
     function LinkComponent(props: ICellRendererParams) {
@@ -55,7 +65,7 @@ export default function Profile() {
 
     return (
         <div className='flex'>
-            <Navbar />
+            <Navbar sheets={[{name: 'Sheet 1', id: 0}, {name: 'Sheet 2', id: 1}]} />
             <div className='flex flex-col h-screen w-full justify-center p-36'>
                 <div className='ag-theme-quartz-dark' style={{ height: '100%', width: '100%' }}>
                     <AgGridReact
