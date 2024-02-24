@@ -5,7 +5,7 @@ import LandingMain from "@/components/LandingMain";
 export default function Home() {
 
   return (
-    <div className='bg-darkColor'>
+    <div className='bg-zinc-900'>
       <LandingMain/>
     </div>
   );

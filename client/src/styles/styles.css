@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+* {
+    font-family: 'Plus Jakarta Sans', '';
+}
+ 
  .blurred-container {
-    background: rgba(38, 33, 45, 0.5);
-     /* RGBA color with alpha channel for transparency */
-     backdrop-filter: blur(10px);
-     /* Adjust the blur radius as needed */
-     padding: 20px;
-     /* Add padding to see the effect more clearly */
+    background: rgba(21, 21, 21, 0.5);
+    /* RGBA color with alpha channel for transparency */
+    backdrop-filter: blur(10px);
+    /* Adjust the blur radius as needed */
+    padding: 20px;
+    /* Add padding to see the effect more clearly */
  }
 
 
@@ -13,4 +19,76 @@
     text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
     text-align: center;
     transition: 0.25s;
+}
+
+.glowing-head {
+    text-align: center;
+    letter-spacing: -.04em;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(#fff 30%, rgba(255, 255, 255, 0.201));
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    transition: transform .96s cubic-bezier(.3, 1.17, .55, .99);
+}
+
+.hero-sub {
+    max-width: 52rem;
+    color: rgba(255, 255, 255, .6);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Inconsolata, monospace;
+}
+
+.main-button-n {
+    border-radius: 100rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+    text-decoration: none;
+    transition: all .4s;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(151, 39, 182, 0.566);
+}
+
+.main-button-n:hover {
+    box-shadow: 0 0 50px rgb(212, 58, 255);
+}
+
+.main-button-inner {
+    z-index: 1;
+    background-color: #151515;
+    border-radius: 100rem;
+    position: relative;
+}
+
+.main-button-text {
+    z-index: 2;
+    grid-column-gap: 0.5em;
+    white-space: nowrap;
+    -webkit-text-fill-color: transparent;
+    background-color: #151515;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, .7), #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1.7rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    display: flex;
+    position: static;
+    top: 1%;
+    bottom: 1%;
+    left: 1%;
+    right: 1%;
+    word-spacing: 3px;
 }

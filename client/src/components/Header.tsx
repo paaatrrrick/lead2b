@@ -131,15 +131,15 @@ export function Header() {
                   className="relative inline-block rounded-lg p-4 text-[1rem] text-zinc-500 transition duration-400 ease-in-out hover:text-zinc-300 glow"
                   style={{ position: "relative" }}
                 >
-                  {page.name}
+                  ={page.name}=
                 </Link>
               ))}
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              {isAuthenticated && <button className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300" onClick={() => {signOut(fireBaseAuth)}}>Logout</button>}
-              {!isAuthenticated && <Link href="/login" className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300">Log in</Link>}
+              {isAuthenticated && <button className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300" onClick={() => {signOut(fireBaseAuth)}}>=Logout=</button>}
+              {!isAuthenticated && <Link href="/login" className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300">=Log in=</Link>}
             </div>
             {(isAuthenticated && profilePicture) && 
             <img 
@@ -148,7 +148,7 @@ export function Header() {
               alt="Profile Picture" 
               onClick={() => {window.location.href = constants.routes.defaultAuthenticatedRoute}}
             />}
-            {!isAuthenticated && <Link href="/signup" className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300">Sign Up</Link>}
+            {!isAuthenticated && <Link href="/signup" className="inline-block rounded-lg p-4 transition duration-400 text-[1rem] glow text-zinc-500 transition ease-in-out hover:text-zinc-300">=Sign Up=</Link>}
             <div className="-mr-1 md:hidden">
               <MobileNavigation isAuthenticated={isAuthenticated}/>
             </div>
