@@ -5,6 +5,7 @@ import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'e
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
+import AuthRouter from './routes/auth';
 import mongoose from 'mongoose';
 
 export default class Api {
@@ -44,6 +45,7 @@ export default class Api {
         app.use(bodyParser.json(), bodyParser.urlencoded({ extended: false }))
         app.use(cors({credentials: true, origin: this.clientUrl}));
         app.use(cookieParser());
+        app.use(`/auth`, AuthRouter);
         app.use(this.error());
 
         let PORT: number | string = process.env.PORT;
