@@ -5,11 +5,31 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import NavbarItem from './NavbarItem';
 import { Sheet } from '../types/sheet';
 import UserSettings from './UserSettings'
+import { fireBaseAuth } from "@/helpers/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Navbar({ sheets, setIsNewSheet } : { sheets: Sheet[], setIsNewSheet(isNewSheet: boolean): void }){ // sheet is { name: string, id: number }
 
     const [userSettingsShowing, setUserSettingsShowing] = useState<boolean>(false); 
     const [userSheets, setUserSheets] = useState<Sheet[]>([]);
+
+    const [profilePicture, setProfilePicture] = useState<string>('');
+    const [displayName, setDisplayName] = useState<string>('');
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(fireBaseAuth, (user) => {
+            if (user) {
+            setProfilePicture(user.photoURL || '');
+            setIsAuthenticated(true);
+            setDisplayName(user.displayName || 'User Profile');
+            } else {
+            setIsAuthenticated(false);
+            setProfilePicture('');
+            }
+        });
+        return () => {unsubscribe();}
+    },[])
 
     useEffect(() => {
         setUserSheets(sheets);
@@ -31,8 +51,12 @@ export default function Navbar({ sheets, setIsNewSheet } : { sheets: Sheet[], se
                     </ul>
                 </div>
                 <div className='relative mt-auto flex justify-start gap-2 items-center text-white text-md cursor-pointer p-2 rounded-md duration-450 z-0 w-full bg-brandColor hover:bg-brandHoverColor transition' onClick={() => setUserSettingsShowing(!userSettingsShowing)}>
-                    <img src="https://via.placeholder.com/150" alt="profile" className="rounded-full h-9 w-9"/>
-                    <p>User Profile</p>
+                    <img 
+                    className="h-9 w-9 rounded-full"
+                    src={profilePicture} 
+                    alt="Profile Picture" 
+                    />
+                    <p>{displayName}</p>
                     {userSettingsShowing && <UserSettings/>}
                 </div>
             </div>
