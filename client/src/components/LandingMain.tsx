@@ -115,9 +115,11 @@ const LandingMain = () => {
         </span>
       </h1>
       <p className="text-center text-zinc-500" style={{fontFamily: 'Arial'}}>
-        95% of lead generation is spent manually going through websites. Sheetz automates that whole process in under one minute.
+        95% of lead generation is spent manually going through websites. Sheetz automates that whole process in under one minute. <br/>
+        Simply enter the information you need and sheetz will fill in the rest.
       </p>
       <div className="flex flex-col justify-center items-center w-full h-full p-10 gap-2">
+        <p className="text-center text-[1.2rem] text-zinc-500">{displayedText}{showCursor && <>|</>}</p>
         <div className='ag-theme-quartz-dark' style={{ height: '260px', width: '83%' }}>
           <AgGridReact
             rowData={rowData}
