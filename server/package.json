@@ -27,12 +27,14 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "exa-js": "^1.0.12",
     "express": "^4.17.1",
     "firebase": "^10.7.0",
     "firebase-admin": "^11.11.1",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.0.0",
-    "ws": "^8.16.0"
+    "ws": "^8.16.0",
+    "openai": "^4.28.0"
   }
 }

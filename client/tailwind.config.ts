@@ -20,6 +20,7 @@ const config: Config = {
       },
       colors: {
         "brandColor": `var(--colors-brandColor)`,
+        "brandHoverColor": `var(--colors-brandHoverColor)`,
         "darkColor": `var(--colors-darkColor)`,
         "mediumDarkColor": `var(--colors-mediumDarkColor)`,
         "grayColor": `var(--colors-grayColor)`,
@@ -31,6 +32,7 @@ const config: Config = {
       DEFAULT: {
         colors: {
           'brandColor': '#6500E5',
+          'brandHoverColor': '#6500D8',
           'darkColor': '#26212D',
           'mediumDarkColor': '#32283E',
           'grayColor': '#C5BFCD',

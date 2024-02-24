@@ -1,0 +1,36 @@
+            async function searchAndPrintLinks() {
+                const htmls = [];
+                const links = await searchForLinks("javascript", 2);
+                for (let i = 0; i < links.length; i++) {
+                    const html = await getWebsiteHTML(links[i]);
+                    htmls.push(html);
+                }
+                console.log('HTMLs:', htmls);
+                return htmls;
+            }
+            
+            async function processQueries() {
+                const htmls = await searchAndPrintLinks();
+                const queries = ["What is JavaScript?", "What is the history of JavaScript?"];
+                console.log('HTMLs:', htmls); // Ensure this logs the actual HTML contents or summaries
+            
+                const results = [];
+            
+                // Assuming findValueInText expects a single HTML content and a single query
+                for (const html of htmls) {
+                    const htmlResults = [];
+                    for (const query of queries) {
+                        const result = await findValueInText(html, query);
+                        htmlResults.push(result);
+                    }
+                    results.push(htmlResults);
+                }
+            
+                console.log('Results:', results);
+                return results;
+            }
+            
+            // Call the function to process the queries
+            processQueries();
+            
+        });
