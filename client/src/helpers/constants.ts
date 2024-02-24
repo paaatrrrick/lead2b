@@ -22,6 +22,9 @@ interface Routes {
 interface Endpoints {
   emailSignUp: string;
   googleSignUp: string;
+  getSheetNames: string;
+  createSheet: string;
+  getSheet: string;
 }
 
 const constants : Constants = {
@@ -38,6 +41,9 @@ const constants : Constants = {
   endpoints: {
     emailSignUp: "/auth/email-signup",
     googleSignUp: "/auth/google-signup",
+    getSheetNames: "/sheet/getNames",
+    createSheet: "/sheet/create",
+    getSheet: "/sheet/get",
   }
 };
 

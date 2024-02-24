@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import constants from '@/helpers/constants';
+import { getAuthToken } from '@/helpers/firebase';
+import React, { useState } from 'react';
+import { Sheet } from '@/types/sheet';
 
-export default function NewSheetForm() {
+interface NewSheetFormProps {
+    setSheets: (sheets: Sheet[]) => void;
+    setView: (view: string) => void;
+    sheets: Sheet[];
+}
+
+export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFormProps) {
     const [currentStep, setCurrentStep] = useState(1);
     const [disableFirstNext, setDisableFirstNext] = useState(true);
     const [disableSecondNext, setDisableSecondNext] = useState(true);
@@ -13,9 +22,25 @@ export default function NewSheetForm() {
         columns: '',
     });
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        const newFormData = { ...formData };
+        //@ts-ignore
+        newFormData['columns'] = newFormData['columns'].split(',').map((item: string) => item.trim());
+        console.log(newFormData);
+        const token = await getAuthToken();
+        const res = await fetch(`${constants.serverUrl}${constants.endpoints.createSheet}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(newFormData),
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        setSheets([{ id: data._id, name: newFormData.sheetName }, ...sheets]);
+        setView(data._id);
     };
 
     const nextStep = () => {

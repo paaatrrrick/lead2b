@@ -6,7 +6,7 @@ import NavbarItem from './NavbarItem';
 import { Sheet } from '../types/sheet';
 import UserSettings from './UserSettings'
 
-export default function Navbar({ sheets, setIsNewSheet } : { sheets: Sheet[], setIsNewSheet(isNewSheet: boolean): void }){ // sheet is { name: string, id: number }
+export default function Navbar({ sheets, setView } : { sheets: Sheet[], setView(view: string): void }){ // sheet is { name: string, id: number }
 
     const [userSettingsShowing, setUserSettingsShowing] = useState<boolean>(false); 
     const [userSheets, setUserSheets] = useState<Sheet[]>([]);
@@ -18,7 +18,7 @@ export default function Navbar({ sheets, setIsNewSheet } : { sheets: Sheet[], se
     return (
         <div className='flex justify-between bg-brandColor p-2 min-w-[250px]'>
             <div className='flex flex-col justify-start items-center w-full p-3'>
-                <div onClick={() => setIsNewSheet(true)} className='text-white text-md cursor-pointer p-2 rounded-md flex items-center justify-start gap-2 text-md w-full mb-16 bg-brandColor hover:bg-brandHoverColor transition'>
+                <div onClick={() => setView('')} className='text-white text-md cursor-pointer p-2 rounded-md flex items-center justify-start gap-2 text-md w-full mb-16 bg-brandColor hover:bg-brandHoverColor transition'>
                     <p>Create Sheet</p>
                     <FontAwesomeIcon icon={faSquarePlus}/>
                 </div>
@@ -26,7 +26,7 @@ export default function Navbar({ sheets, setIsNewSheet } : { sheets: Sheet[], se
                     <h3 className="w-full text-md text-zinc-500 p-2 pb-0">Your Sheets</h3>
                     <ul className='flex flex-col justify-center items-start text-left w-full'>
                         {userSheets.map((sheet) => (
-                            <NavbarItem key={sheet.id} sheetName={sheet.name} handleClick={() => setIsNewSheet(false)}/>
+                            <NavbarItem key={sheet.id} sheetName={sheet.name} handleClick={() => setView(sheet.id)}/>
                         ))}
                     </ul>
                 </div>

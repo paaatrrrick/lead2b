@@ -6,6 +6,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from "cookie-parser";
 import AuthRouter from './routes/auth';
+import SheetsRouter from './routes/sheet';
 import mongoose from 'mongoose';
 import { createServer } from 'http'; // Use createServer for clearer semantics
 import { WebSocketServer } from 'ws';
@@ -50,6 +51,7 @@ export default class Api {
         app.use(cors({ credentials: true, origin: this.clientUrl }));
         app.use(cookieParser());
         app.use(`/auth`, AuthRouter);
+        app.use(`/sheet`, SheetsRouter);
         app.use(this.error());
 
         // Create an HTTP server and wrap the express app
@@ -60,15 +62,10 @@ export default class Api {
         wss.on('connection', ws => {
             ws.on('message', message => {
                 var json = JSON.parse(message.toString());
-                console.log(json);
                 if (json.type === "create") {
-                    const rows : number = json.rows; 
-                    const headers : string[] = json.headers;
-                    const firstHeader : string = headers.shift();
-                    createGraph(rows, headers, firstHeader, ws);       
+                    createGraph(json.id, ws);       
                 }
             });
-
             ws.on('close', () => {
                 console.log('Client disconnected.');
             });

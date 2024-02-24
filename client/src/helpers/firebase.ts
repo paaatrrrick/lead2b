@@ -11,15 +11,22 @@ interface FirebaseConfig {
     appId: string;
 }
 
-//TODO_UPDATE_THIS: Update the firebaseConfig to your firebase config
 const firebaseConfig : FirebaseConfig = {
-    apiKey: "AIzaSyBqpQ-JqcJ1bcJaxVfHb7eL-ygSSRD3SNQ",
-    authDomain: "worlds-best-boilerplate.firebaseapp.com",
-    projectId: "worlds-best-boilerplate",
-    storageBucket: "worlds-best-boilerplate.appspot.com",
-    messagingSenderId: "875669545922",
-    appId: "1:875669545922:web:e31d35a275d9e65faeec5b"
+    apiKey: "AIzaSyAE0Avfto5M5B8CJISL55UmEorEXI-s_IU",
+    authDomain: "sheetz-ai.firebaseapp.com",
+    projectId: "sheetz-ai",
+    storageBucket: "sheetz-ai.appspot.com",
+    messagingSenderId: "839793654708",
+    appId: "1:839793654708:web:e4a75e6cd603743e0a10e1",
 }
+
+//     apiKey: "AIzaSyAE0Avfto5M5B8CJISL55UmEorEXI-s_IU",
+//     authDomain: "sheetz-ai.firebaseapp.com",
+//     projectId: "sheetz-ai",
+//     storageBucket: "sheetz-ai.appspot.com",
+//     messagingSenderId: "839793654708",
+//     appId: "1:839793654708:web:e4a75e6cd603743e0a10e1",
+//     measurementId: "G-V99LY9L2E4"
 
 initializeApp(firebaseConfig);
 const fireBaseAuth = getAuth();
@@ -28,23 +35,24 @@ const GoogleProvider = new GoogleAuthProvider();
 
 const SignUpWithGooglePopUp = async (setError : (msg : string) => void, login = true) => {
     try {
+        console.log('we are here');
         const result = await signInWithPopup(fireBaseAuth, GoogleProvider);
         const user = result.user;
         if (!user || !user.email || !user.displayName || !user.uid) {
             throw new Error('Error creating account');
         }
-        if (!login) {
-            const response = await fetch(`${constants.serverUrl}${constants.endpoints.googleSignUp}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: user.email, name: user.displayName, firebaseUID: user.uid }),
-            });
-            if (!response.ok) {
-                throw new Error('Error creating account');
-            }
-        };
+        console.log('we are sening the request 1')
+            console.log('we are sening the request')
+        const response = await fetch(`${constants.serverUrl}${constants.endpoints.googleSignUp}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: user.email, name: user.displayName, firebaseUID: user.uid }),
+        });
+        if (!response.ok) {
+            throw new Error('Error creating account');
+        }
         window.location.href = constants.routes.defaultAuthenticatedRoute;
     } catch (error) {
         //@ts-ignore
@@ -72,4 +80,13 @@ const LogInWithEmail = async (setError : (msg : string) => void, email : string,
 }
 
 
-export { GoogleProvider, fireBaseAuth, SignUpWithGooglePopUp, LogInWithEmail };
+
+const getAuthToken = async () : Promise<String> => {
+    while (true) {
+        const token = await fireBaseAuth.currentUser?.getIdToken(true);
+        if (token) return token;
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
+}
+
+export { GoogleProvider, fireBaseAuth, SignUpWithGooglePopUp, LogInWithEmail, getAuthToken };

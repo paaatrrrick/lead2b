@@ -11,11 +11,14 @@ const AuthRouter = express.Router();
 
 AuthRouter.post('/google-signup', catchAsync(async (req: RequestWithUser, res: Response, next: NextFunction) => {
     const { firebaseUID, email, name } = req.body;
+    console.log('at google sign up');
     const oldUser = await User.findOne({ firebaseUID });
     if (oldUser) {
         return res.status(400).send({ message: 'Email already in use' });
     }
+    console.log('creating new user');
     const newUser = new User({ firebaseUID, email, name });
+    console.log(newUser);
     await newUser.save();
     res.status(200).send({ message: 'Account Created' });
 }));
@@ -23,6 +26,7 @@ AuthRouter.post('/google-signup', catchAsync(async (req: RequestWithUser, res: R
 AuthRouter.post('/email-signup', catchAsync(async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
         const { name, email, password } = req.body;
+        console.log('at email sign up');
         const oldUser = await User.findOne({ email });
         if (oldUser) {
             return res.status(400).send({ message: 'This email is already in use with another account.' });
