@@ -7,6 +7,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import Navbar from '../../../components/Navbar';
 import AgGrid from '../../../components/AgGrid';
+import NewSheetForm from '../../../components/NewSheetForm';
 
 export default function Profile() {
     const [items, setItems] = useState<GridItem[]>([]);
@@ -69,7 +70,7 @@ export default function Profile() {
             <Navbar sheets={[{name: 'Sheet 1', id: 0}, {name: 'Sheet 2', id: 1}]} setIsNewSheet={setIsNewSheet}/>
             <div className='flex flex-col h-screen w-full justify-center p-36'>
                 {
-                    isNewSheet ? <div>Hello World</div> : <AgGrid rowData={rowData} colDefs={colDefs}/>
+                    isNewSheet ? <NewSheetForm/> : <AgGrid rowData={rowData} colDefs={colDefs}/>
                 }
             </div>
         </div>
