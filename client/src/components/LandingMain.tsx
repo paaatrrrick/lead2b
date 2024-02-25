@@ -131,7 +131,7 @@ const LandingMain = () => {
         Simply enter the information you need and sheetz will fill in the rest.
       </p>
       <div className="flex flex-col justify-center items-center w-full h-full p-10 gap-2">
-        <p className="text-center text-[1.2rem] text-zinc-500">{displayedText}{showCursor && <>|</>}</p>
+        <p className="text-center text-zinc-500">{displayedText}{showCursor && <>|</>}</p>
         <div className='ag-theme-quartz-dark' style={{ height: '260px', width: '83%' }}>
           <AgGridReact
             rowData={rowData}
