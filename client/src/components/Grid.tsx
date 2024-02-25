@@ -2,7 +2,7 @@
 import { AgGridReact } from 'ag-grid-react';
 import type { Grid } from '@/types/grid';
 import { GridItem } from '@/types/grid';
-import { ColDef, ICellRendererParams, GridOptions } from 'ag-grid-community';
+import { ColDef, ICellRendererParams } from 'ag-grid-community';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { getAuthToken } from '@/helpers/firebase';
 import constants from '@/helpers/constants';
@@ -10,7 +10,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export default function Grid({ id, name }: { id: string, name : string}) {
     const [items, setItems] = useState<GridItem[]>([]);

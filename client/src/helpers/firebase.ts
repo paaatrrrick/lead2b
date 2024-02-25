@@ -60,7 +60,7 @@ const SignUpWithGooglePopUp = async (setError : (msg : string) => void, login = 
             setError(`Account already exists with email`)
         } else {
             // Handle other errors
-            setError(`Error ${login ? 'logging in' : 'creating account'} with Google`)
+            // setError(`Error ${login ? 'logging in' : 'creating account'} with Google`)
         }
     }
 };
