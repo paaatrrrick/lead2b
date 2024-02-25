@@ -13,10 +13,12 @@ async function getWebsiteHTML(url: string): Promise<string | null> {
     // Remove all extra white spaces and trim the text
     // console.log('-----------------------------------');
     // console.log(textContent.replace(/\s+/g, ' ').trim());
-    return textContent.replace(/\s+/g, ' ').trim();
+    const html : string = textContent.replace(/\s+/g, ' ').trim();
+    if (!html || typeof html !== 'string') return "N/A";
+    return html;
+
   } catch (error) {
-    console.error('Error fetching website HTML:', error);
-    return null;
+    return "N/A";
   }
 }
 

@@ -10,7 +10,7 @@ import SheetsRouter from './routes/sheet';
 import mongoose from 'mongoose';
 import { createServer } from 'http'; // Use createServer for clearer semantics
 import { WebSocketServer } from 'ws';
-import createGraph from './methods/websocket';
+import { createGraph } from './methods/websocket';
 
 
 export default class Api {
@@ -63,10 +63,7 @@ export default class Api {
             ws.on('message', message => {
                 var json = JSON.parse(message.toString());
                 if (json.type === "create") {
-                    const rows : number = json.rows; 
-                    const headers : string[] = json.headers;
-                    const firstHeader : string = headers.shift();
-                    createGraph(rows, headers, firstHeader, ws, 5);
+                    createGraph(json.id, ws);       
                 }
             });
             ws.on('close', () => {
