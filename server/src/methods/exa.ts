@@ -20,7 +20,7 @@ async function searchForLinks(search : string, num: number) {
         for (let i = 0; i < response.results.length; i++) {
             results.push(response.results[i].url);
         }
-        console.log('Results:', results);
+        // console.log('Results:', results);
         return results;
 
     } catch (error) {
