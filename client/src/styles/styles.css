@@ -13,6 +13,14 @@
     /* Add padding to see the effect more clearly */
  }
 
+ .darker-blurred-container {
+     background: rgba(21, 21, 21, 0.665);
+     /* RGBA color with alpha channel for transparency */
+     backdrop-filter: blur(10px);
+     /* Adjust the blur radius as needed */
+     padding: 20px;
+     /* Add padding to see the effect more clearly */
+ }
 
 .glow:hover {
     color: #fff;

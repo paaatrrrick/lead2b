@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Sheet } from '@/types/sheet';
 import Steps from './Steps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo } from '@fortawesome/free-solid-svg-icons';
+import PromptInfoModal from './PromptInfoModal';
 
 interface NewSheetFormProps {
     setSheets: (sheets: Sheet[]) => void;
@@ -18,6 +19,7 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
     const [disableSecondNext, setDisableSecondNext] = useState(true);
     const [disableThirdNext, setDisableThirdNext] = useState(true);
     const [currColumn, setCurrColumn] = useState('');
+    const [showPromptInfo, setShowPromptInfo] = useState(false);
 
     const [formData, setFormData] = useState({
         prompt: '', 
@@ -76,7 +78,7 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
 
 
     return (
-        <form className='flex justify-between flex-col items-center gap-2 w-full h-full z-50 shadow-2xl rounded-xl p-10 bg-[#08050F] shadow-[#321b3c] drop-shadow-2xl' onSubmit={handleSubmit}>
+        <form className='relative flex justify-between flex-col items-center gap-2 w-full h-full z-50 shadow-2xl rounded-xl p-10 bg-[#08050F] shadow-[#321b3c] drop-shadow-2xl' onSubmit={handleSubmit}>
                 <Steps currentStep={currentStep-1} />
                 {currentStep > 1 && (
                     <button 
@@ -90,7 +92,13 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                 <div className='flex flex-col gap-10 w-full items-start justify-center w-full h-full mt-20'>
                     <div className='flex flex-col justify-center items-start gap-2 w-full'>
                         <p className='text-zinc-500 text-md'>SHEET PROMPT</p>
-                        <h2 className="text-lg text-zinc-400 font-semibold">What are you searching for?</h2>
+                        <div className='flex gap-2 items-center justify-center'>
+                            <h2 className="text-lg text-zinc-400 font-semibold">What are you searching for?</h2>
+                            {showPromptInfo && <PromptInfoModal setShowPromptInfo={setShowPromptInfo} />}
+                            {!showPromptInfo && <span className='min-w-3 min-h-3 text-sm flex justify-center items-center outline rounded-full cursor-pointer text-zinc-500 transition duration-500 hover:text-zinc-400' onClick={() => setShowPromptInfo(true)}>
+                                <FontAwesomeIcon icon={faInfo} />
+                            </span>}
+                        </div>
                     </div>
                     <div className='flex flex-col gap-5 w-full h-full'>
                         <input
