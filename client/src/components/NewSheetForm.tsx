@@ -189,7 +189,11 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                             }}
                             required
                         />
-                        <button type='submit' className='bg-brandColor transition duration-400 hover:bg-brandHoverColor text-white p-2 rounded-md w-full'>
+                        <button 
+                        type='submit' 
+                        className={`${disableThirdNext ? 'bg-[#231b3c] cursor-not-allowed' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400'} text-zinc-500 p-2 rounded-md w-full h-12`}
+                        disabled={disableThirdNext}
+                        >
                             Create
                         </button>
                     </div>
