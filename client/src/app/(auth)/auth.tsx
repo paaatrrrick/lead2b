@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import constants from '@/helpers/constants';
 import { SignUpWithGooglePopUp, LogInWithEmail } from '@/helpers/firebase';
@@ -56,11 +57,11 @@ const Auth = ({isLogin}: AuthProps) => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-between h-screen w-screen bg-offwhite">
-        <div className="bg-white rounded-lg shadow-md max-w-md min-w-[320px] p-8 w-full mt-24">
+        <div className="flex flex-col items-center justify-between h-screen w-screen bg-[#08050F]">
+        <div className="bg-[#2c2c2c] rounded-lg shadow-md max-w-md min-w-[320px] p-8 w-full mt-24">
             <div className="flex flex-row items-center justify-between w-full mb-4">
-                <h1 className="text-2xl font-medium text-black">{screen}</h1>
-                <a href={hrefLink} className="font-normal text-sm text-primary3 text-brandColor-500 underline">{switchAuthScreen}</a>
+                <h1 className="text-2xl font-medium text-white">{screen}</h1>
+                <a href={hrefLink} className="font-normal text-sm text-primary3 text-white underline">{switchAuthScreen}</a>
             </div>
             <form 
                 className="flex flex-col items-center justify-between w-full"
@@ -78,7 +79,6 @@ const Auth = ({isLogin}: AuthProps) => {
                     onClick={() => setShowPassword(true)}
                     onChange={(event) => setEmail(event.target.value)}
                 />
-                {showPassword && (
                     <input
                     type="password"
                     id="password"
@@ -86,12 +86,8 @@ const Auth = ({isLogin}: AuthProps) => {
                     className="w-full border border-gray-500 focus:border-brandColor focus:ring-0 rounded-md flex h-12 px-3 text-base leading-6 outline-none font-normal mt-4"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    onKeyPress={(event) => {
-                        if (event.key === 'Enter') handleSignup();
-                    }}
                     />
-                )}
-                {showPassword && !isLogin && (
+                {!isLogin && (
                     <input
                     type="text"
                     id="name"
@@ -99,15 +95,12 @@ const Auth = ({isLogin}: AuthProps) => {
                     className="w-full border border-gray-500 rounded-md focus:border-brandColor focus:ring-0 flex h-12 px-3 text-base leading-6 outline-none font-normal mt-4"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
-                    onKeyPress={(event) => {
-                        if (event.key === 'Enter') handleSignup();
-                    }}
                     />
                 )}
                 {error !== '' && <p className='text-red-600 text-sm font-light mt-2 mb-1'>{error}</p>}
                 <button 
                     type="submit"
-                    className='w-full mt-4 font-normal text-sm h-12 bg-brandColor-600 text-white rounded-md'
+                    className='w-full mt-4 font-normal text-md h-12 bg-brandColor text-white rounded-md'
                 >
                     {capitalizeFirstLetter(screen)}
                 </button>
@@ -119,8 +112,8 @@ const Auth = ({isLogin}: AuthProps) => {
                 <img className='mr-4' src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4="/>
                 {capitalizeFirstLetter(screen)} with Google
             </button>
-            <p className='font-light mt-4 text-sm text-gray-500'>
-                This site is protected by reCAPTCHA and the Google <span><a href='https://policies.google.com/privacy' target="_blank" className='text-gray-500 underline'>Privacy Policy</a></span> and <span><a href='https://policies.google.com/privacy' target="_blank" className='text-gray-500 underline'>Terms of Service apply</a></span>.
+            <p className='font-light mt-4 text-sm text-gray-200'>
+                This site is protected by reCAPTCHA and the Google <span><a href='https://policies.google.com/privacy' target="_blank" className='text-gray-300 underline'>Privacy Policy</a></span> and <span><a href='https://policies.google.com/privacy' target="_blank" className='text-gray-300 underline'>Terms of Service apply</a></span>.
             </p>
         </div>
         <div className="custom-shape-divider-bottom-1674142871">

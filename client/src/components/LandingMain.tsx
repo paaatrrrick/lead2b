@@ -53,7 +53,7 @@ const LandingMain = () => {
       description: 'Developing only the best products for the world.',
     }]);
   const [indexToShow, setIndexToShow] = useState(0);
-  const text = "Give me 5 companies with their website url, title, CEO, company email, and description of the company";
+  const text = '"Give me 5 companies with their website url, title, CEO, company email, and description"';
   const [displayedText, setDisplayedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
 
@@ -126,12 +126,11 @@ const LandingMain = () => {
           Lead Generation
         </span>
       </h1>
-      <p className="text-center text-zinc-500" style={{fontFamily: 'Arial'}}>
-        95% of lead generation is spent manually going through websites. Sheetz automates that whole process in under one minute. <br/>
-        Simply enter the information you need and sheetz will fill in the rest.
+      <p className="text-center text-zinc-400" style={{fontFamily: 'Arial'}}>
+        Sheetz uses AI to autonomously to search the web and find leads for your business.
       </p>
       <div className="flex flex-col justify-center items-center w-full h-full p-10 gap-2">
-        <p className="text-center text-zinc-500">{displayedText}{showCursor && <>|</>}</p>
+        <p className="text-center text-zinc-300 text-[18px]">{displayedText}{showCursor && <>|</>}</p>
         <div className='ag-theme-quartz-dark' style={{ height: '260px', width: '83%' }}>
           <AgGridReact
             rowData={rowData}
