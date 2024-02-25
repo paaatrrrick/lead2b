@@ -10,9 +10,9 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-export default function Grid({ id }: { id: string}) {
+export default function Grid({ id, name }: { id: string, name : string}) {
     const [items, setItems] = useState<GridItem[]>([]);
     const [headers, setHeaders] = useState<string[]>([]);
     const gridRef = useRef<AgGridReact>(null);
@@ -100,6 +100,14 @@ export default function Grid({ id }: { id: string}) {
 
     return (
         <div className={`ag-theme-quartz-dark w-full`}>
+            <div className='flex row items-center'>
+                <h1 className='text-[36px] font-bold mb-[12px] mt-[12px]'>{name}</h1>
+                <button onClick={onBtnExport} className=' ml-4 mt-[8px] transition ease-in-out font-semibold rounded-xl text-white hover:border-brandColor text-[12px] flex justify-center items-center border-[1px] gap-[16px] py-[3px] px-[12px]'>
+                    <p className='mb-[1px]'>export</p>
+                    <FontAwesomeIcon icon={faArrowRight} color='white' />
+                </button>
+            </div>
+            <p className='text-white ml-1 mb-[32px]'>Each row has been autonomously scrapped from the web based on the query you passed in</p>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}
@@ -108,10 +116,6 @@ export default function Grid({ id }: { id: string}) {
                 animateRows
                 className='my-4 mb-0'
             />
-            <button onClick={onBtnExport} className='transition duration-400 rounded-xl text-zinc-600 hover:bg-zinc-300 text-md flex justify-center items-center border-2 gap-2 p-2 h-10'>
-                <FontAwesomeIcon icon={faArrowDown} />
-                Export CSV
-            </button>
         </div>
     )
 }

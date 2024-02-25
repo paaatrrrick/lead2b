@@ -46,7 +46,7 @@ export default function Navbar({ sheets, setView, view } : { sheets: Sheet[], se
             {!isLoading && (
             <div className='flex justify-between bg-[#231b3c] p-2 min-w-[250px] h-screen fixed'>
                 <div className='flex flex-col justify-start items-center w-full p-3'>
-                    <div onClick={() => setView('')} className='text-md cursor-pointer p-4 border-brandColor text-brandColor border-2 rounded-md flex items-center justify-between gap-2 w-full mb-16 h-12'>
+                    <div onClick={() => setView('')} className='text-md cursor-pointer px-4 py-2 border-white text-white border-[1px] rounded-md flex items-center justify-between w-full mb-16 hover:border-brandColor transition ease-in-out'>
                         <p>Create Sheet</p>
                         <FontAwesomeIcon icon={faSquarePlus}/>
                     </div>
