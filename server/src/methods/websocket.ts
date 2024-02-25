@@ -16,7 +16,7 @@ async function searchAndPrintLinks(query : string, results : number) {
     const htmls : string[] = [];
     const links : string[] = [];
     var freeloadingSpots = results;
-    const linksInTest = await searchForLinks(query, results * 2);
+    const linksInTest = await searchForLinks(query, Math.floor(results * 1.2));
     var i = 0;
     while (links.length < results) {
         const html = await getWebsiteHTML(linksInTest[i]);
@@ -42,7 +42,7 @@ const wsWrapper = (ws : any, itemCount : number, id : string) => {
         if (message.type === "newItems") {
             graph.push(...message.value);
             ws.send(JSON.stringify(message));
-            console.log(graph.length);
+            // console.log(graph.length);
             if (graph.length === itemCount) {
                 Sheet.findByIdAndUpdate(id, {gridItems: graph}).exec()                
             }
@@ -78,6 +78,7 @@ const bfs = async (link : string, column : string) => {
 
     while (currentLayer.length > 0 && depth <= 2 || visitedCount < 8) {
         const url : string = currentLayer.shift();
+        console.log(url);
         const html : string = await getWebsiteHTML(url);
         if (html !== "N/A") {
             const text : string = cheerio.load(html)('body').text();
@@ -85,12 +86,13 @@ const bfs = async (link : string, column : string) => {
 
             const response : string = await findValueInText(text, column);
             if (response !== "N/A") {
-                console.log(response);
+                // console.log(response);
                 return response;
             }
 
             //add neighbors to nextLayer
             const nextLinks : string[] = extractLinksFromHTML(html);
+            console.log(nextLinks);
             for (const nextLink of nextLinks) {
                 if (nextLink.includes(baseUrl) && !usedUrlSet.has(nextLink)) {
                     nextLayer.push(nextLink);
