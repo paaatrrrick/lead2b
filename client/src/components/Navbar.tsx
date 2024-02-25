@@ -7,6 +7,8 @@ import { Sheet } from '../types/sheet';
 import UserSettings from './UserSettings'
 import { fireBaseAuth } from "@/helpers/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { Loader } from './Loader'; 
+
 
 export default function Navbar({ sheets, setView } : { sheets: Sheet[], setView(view: string): void }){ // sheet is { name: string, id: number }
 
@@ -16,6 +18,8 @@ export default function Navbar({ sheets, setView } : { sheets: Sheet[], setView(
     const [profilePicture, setProfilePicture] = useState<string>('');
     const [displayName, setDisplayName] = useState<string>('');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(fireBaseAuth, (user) => {
@@ -27,6 +31,7 @@ export default function Navbar({ sheets, setView } : { sheets: Sheet[], setView(
             setIsAuthenticated(false);
             setProfilePicture('');
             }
+            setIsLoading(false);
         });
         return () => {unsubscribe();}
     },[])
@@ -36,30 +41,35 @@ export default function Navbar({ sheets, setView } : { sheets: Sheet[], setView(
     }, [sheets]);
 
     return (
-        <div className='flex justify-between bg-brandColor p-2 min-w-[250px]'>
-            <div className='flex flex-col justify-start items-center w-full p-3'>
-                <div onClick={() => setView('')} className='text-white text-md cursor-pointer p-2 rounded-md flex items-center justify-start gap-2 text-md w-full mb-16 bg-brandColor hover:bg-brandHoverColor transition'>
-                    <p>Create Sheet</p>
-                    <FontAwesomeIcon icon={faSquarePlus}/>
-                </div>
-                <div className="flex justify-center items-center flex-col w-full">
-                    <h3 className="w-full text-md text-zinc-500 p-2 pb-0">Your Sheets</h3>
-                    <ul className='flex flex-col justify-center items-start text-left w-full'>
-                        {userSheets.map((sheet) => (
-                            <NavbarItem key={sheet.id} sheetName={sheet.name} handleClick={() => setView(sheet.id)}/>
-                        ))}
-                    </ul>
-                </div>
-                <div className='relative mt-auto flex justify-start gap-2 items-center text-white text-md cursor-pointer p-2 rounded-md duration-450 z-0 w-full bg-brandColor hover:bg-brandHoverColor transition' onClick={() => setUserSettingsShowing(!userSettingsShowing)}>
-                    <img 
-                    className="h-9 w-9 rounded-full"
-                    src={profilePicture} 
-                    alt="Profile Picture" 
-                    />
-                    <p>{displayName}</p>
-                    {userSettingsShowing && <UserSettings/>}
+        <>
+            {isLoading && <Loader />}
+            {!isLoading && (
+            <div className='flex justify-between bg-brandColor p-2 min-w-[250px] h-screen fixed'>
+                <div className='flex flex-col justify-start items-center w-full p-3'>
+                    <div onClick={() => setView('')} className='text-white text-md cursor-pointer p-2 rounded-md flex items-center justify-start gap-2 w-full mb-16 bg-brandColor h-12 hover:bg-brandHoverColor transition'>
+                        <p>Create Sheet</p>
+                        <FontAwesomeIcon icon={faSquarePlus}/>
+                    </div>
+                    <div className="flex justify-center items-center flex-col w-full">
+                        {userSheets.length > 0 && <h3 className="w-full text-md text-zinc-500 p-2 pb-0">Your Sheets</h3>}
+                        <ul className='flex flex-col justify-center items-start text-left w-full'>
+                            {userSheets.map((sheet) => (
+                                <NavbarItem key={sheet.id} sheetName={sheet.name} handleClick={() => setView(sheet.id)}/>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className='relative mt-auto flex justify-start gap-2 items-center text-white text-md cursor-pointer p-2 rounded-md duration-450 z-0 w-full bg-brandColor hover:bg-brandHoverColor transition' onClick={() => setUserSettingsShowing(!userSettingsShowing)}>
+                        <img 
+                        className="h-9 w-9 rounded-full"
+                        src={profilePicture} 
+                        alt="Profile Picture" 
+                        />
+                        <p>{displayName}</p>
+                        {userSettingsShowing && <UserSettings/>}
+                    </div>
                 </div>
             </div>
-        </div>
+            )}
+        </  >
     )
 }

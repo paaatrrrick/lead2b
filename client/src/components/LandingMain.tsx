@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, ICellRendererParams } from 'ag-grid-community';
+import { ColDef, ICellRendererParams, GridOptions } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
@@ -106,6 +106,18 @@ const LandingMain = () => {
   return () => clearInterval(interval);
   }, []);
 
+  const gridOptions: GridOptions<any> = {
+    columnDefs: colDefs,
+    defaultColDef: {
+        flex: 1,
+        editable: true,
+        sortable: true,
+        filter: true
+    },
+    enableRangeSelection: true,
+    copyHeadersToClipboard: true,
+  };
+
   return (
     <div className="flex flex-col justify-start items-center h-auto w-full p-28 text-white">
       <h1 className='glowing-head header' style={{ opacity: 1, transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)', transformStyle: 'preserve-3d' }}>
@@ -124,6 +136,8 @@ const LandingMain = () => {
           <AgGridReact
             rowData={rowData}
             columnDefs={colDefs}
+            gridOptions={gridOptions}
+            animateRows
           />
         </div>
       </div>

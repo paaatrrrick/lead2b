@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import Navbar from '../../../components/Navbar';
-import AgGrid from '../../../components/Grid';
+import Grid from '../../../components/Grid';
 import NewSheetForm from '../../../components/NewSheetForm';
 import { Sheet } from '@/types/sheet';
 import { getAuthToken } from '@/helpers/firebase';
@@ -35,9 +35,9 @@ export default function Profile() {
     return (
         <div className='flex'>
             <Navbar sheets={sheets} setView={setView}/>
-            <div className='flex flex-col h-screen w-full justify-center p-[40px]'>
+            <div className='flex flex-col h-screen w-full justify-start items-center p-[40px] ml-[250px]'>
                 {
-                    (view === "") ? <NewSheetForm setSheets={setSheets} sheets={sheets} setView={setView}/> : <AgGrid id={view}/>
+                    (view === "") ? <NewSheetForm setSheets={setSheets} sheets={sheets} setView={setView}/> : <Grid id={view}/>
                 }
             </div>
         </div>
