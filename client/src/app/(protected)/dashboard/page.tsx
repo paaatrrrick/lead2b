@@ -9,7 +9,7 @@ import { Sheet } from '@/types/sheet';
 import { getAuthToken } from '@/helpers/firebase';
 import constants from '@/helpers/constants';
 import '@/styles/styles.css'
-
+import Image from 'next/image';
 
 export default function Profile() {
     const [view, setView] = useState<string>('');
@@ -39,7 +39,16 @@ export default function Profile() {
     return (
         <div className='flex bg-[#08050F]'>
             <Navbar sheets={sheets} setView={setView} view={view}/>
-            <div className='flex flex-col h-screen w-full justify-start items-center p-[40px] ml-[250px]'>
+            <div className='flex flex-col h-screen w-full justify-start items-center p-[40px] ml-[250px] gap-4'>
+                <a className='flex gap-2 w-full items-center justify-center' href="/">
+                    <Image
+                        src="/images/sheetz.png" 
+                        alt="Example Image"
+                        width={40}  
+                        height={40}  
+                    />
+                    <p className='text-white text-lg font-bold'>sheetz</p>
+                </a>
                 {
                     (view === "") ? <NewSheetForm setSheets={setSheets} sheets={sheets} setView={setView}/> : <Grid id={view} name={currentName}/>
                 }
