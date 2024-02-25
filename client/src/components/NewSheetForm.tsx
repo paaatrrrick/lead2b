@@ -147,7 +147,10 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                         <p className='text-zinc-400 text-[1.15rem]'>Current Headers</p>
                         <ul className='flex flex-col gap-2 text-md'>
                             {formData.columns.map((col, i) => (
-                                <li key={i} className='text-zinc-500'>{col}</li>
+                                <li className="flex gap-2 justify-start items-center">
+                                    <p className='text-zinc-500'>{i+1}.</p>
+                                    <p key={i} className='text-zinc-500'>{col}</p>
+                                </li>
                             ))}
                         </ul>
                     </div>}
