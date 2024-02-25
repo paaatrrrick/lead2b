@@ -10,13 +10,11 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function Grid({ id }: { id: string}) {
     const [items, setItems] = useState<GridItem[]>([]);
     const [headers, setHeaders] = useState<string[]>([]);
-    // make a usestate to let users choose their theme
-    const [theme, setTheme] = useState<string>('ag-theme-alpine');
     const gridRef = useRef<AgGridReact>(null);
 
     const setOfLinkSynonyms = new Set(['url', 'linkedin', 'github', 'portfolio', 'website', 'link', 'links', 'site']) 
@@ -101,20 +99,7 @@ export default function Grid({ id }: { id: string}) {
     }, []);
 
     return (
-        <div className={`${theme} w-full`}>
-            <div className='flex gap-2 items-center items-center w-full text-zinc-800'>
-                <label htmlFor="theme">Choose a theme:</label>
-                <select onChange={(e) => setTheme(e.target.value)} value={theme} className='flex justify-center text-md items-center rounded-md cursor-pointer'>
-                    <option value="ag-theme-alpine">Alpine</option>
-                    <option value="ag-theme-alpine-dark">Alpine Dark</option>
-                    <option value="ag-theme-quartz">Quartz</option>
-                    <option value="ag-theme-quartz-dark">Quartz Dark</option>
-                </select>
-                <button onClick={onBtnExport} className='transition duration-400 rounded-xl text-zinc-600 hover:text-zinc-800 text-md flex justify-center items-center gap-2 ml-4'>
-                    Export to CSV
-                    <FontAwesomeIcon icon={faFileArrowDown} />
-                </button>
-            </div>
+        <div className={`ag-theme-quartz w-full`}>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}
@@ -123,6 +108,10 @@ export default function Grid({ id }: { id: string}) {
                 animateRows
                 className='my-4 mb-0'
             />
+            <button onClick={onBtnExport} className='transition duration-400 rounded-xl text-zinc-600 hover:bg-zinc-300 text-md flex justify-center items-center border-2 gap-2 p-2 h-10'>
+                <FontAwesomeIcon icon={faArrowDown} />
+                Export CSV
+            </button>
         </div>
     )
 }
