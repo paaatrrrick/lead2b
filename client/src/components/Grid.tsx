@@ -99,7 +99,7 @@ export default function Grid({ id }: { id: string}) {
     }, []);
 
     return (
-        <div className={`ag-theme-quartz w-full`}>
+        <div className={`ag-theme-quartz-dark w-full`}>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}

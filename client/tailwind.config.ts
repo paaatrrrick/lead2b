@@ -37,7 +37,7 @@ const config: Config = {
     variables: {
       DEFAULT: {
         colors: {
-          'brandColor': '#923DFE',
+          'brandColor': '#AB69FF',
           'lightBrandColor': '#A100FF',
           'brandHoverColor': '#6500D8',
           'darkColor': '#141414',
