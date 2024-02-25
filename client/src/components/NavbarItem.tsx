@@ -10,7 +10,7 @@ export default function NavbarItem({ sheetName, handleClick, active, sheetID, re
     const [hovering, setHovering] = useState<boolean>(false);
     
     //trim sheet name to 17 characters and add '...' if it is longer
-    if (sheetName.length > 25) {
+    if (sheetName.length > 22) {
         sheetName = sheetName.slice(0, 23) + '...';
     }
 
