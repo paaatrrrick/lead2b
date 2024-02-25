@@ -33,8 +33,8 @@ export default function Profile() {
     }, []);
 
     return (
-        <div className='flex'>
-            <Navbar sheets={sheets} setView={setView}/>
+        <div className='flex bg-[#08050F]'>
+            <Navbar sheets={sheets} setView={setView} view={view}/>
             <div className='flex flex-col h-screen w-full justify-start items-center p-[40px] ml-[250px]'>
                 {
                     (view === "") ? <NewSheetForm setSheets={setSheets} sheets={sheets} setView={setView}/> : <Grid id={view}/>
