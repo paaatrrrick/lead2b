@@ -79,7 +79,9 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
         <form className='flex justify-between flex-col items-center gap-2 w-full h-full z-50 shadow-2xl rounded-xl p-10 bg-[#08050F] shadow-[#321b3c] drop-shadow-2xl' onSubmit={handleSubmit}>
                 <Steps currentStep={currentStep-1} />
                 {currentStep > 1 && (
-                    <button className='text-brandColor text-md rounded-md w-full gap-2 flex justify-start items-center' onClick={previousStep}>
+                    <button 
+                    type='button'
+                    className='text-brandColor text-md rounded-md w-full gap-2 flex justify-start items-center' onClick={previousStep}>
                         <FontAwesomeIcon icon={faChevronLeft} />
                         <p>Back</p>
                     </button>
@@ -103,7 +105,7 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                         required
                         />
                         <button
-                        className={`${disableFirstNext ? 'bg-[#231b3c] cursor-not-allowed' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400'} text-zinc-500 p-2 rounded-md w-full h-12`}
+                        className={`${disableFirstNext ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor'} transition duration-400 p-2 rounded-md w-full h-12`}
                         onClick={nextStep}
                         disabled={disableFirstNext}
                         >
@@ -130,13 +132,15 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                         }}
                         />
                         <button
-                        className={'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400 text-zinc-500 p-2 rounded-md w-full h-12'}
+                        type='button'
+                        className={`${currColumn.length === 0 ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor'} transition duration-400 p-2 rounded-md w-full h-12`}
                         onClick={addColumn}
+                        disabled={currColumn.length === 0}
                         >
                             Add
                         </button>
                         <button
-                        className={`${disableSecondNext ? 'bg-[#231b3c] cursor-not-allowed' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400'} text-zinc-500 p-2 rounded-md w-full h-12`}
+                        className={`${disableSecondNext ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor'} transition duration-400 p-2 rounded-md w-full h-12`}
                         onClick={nextStep}
                         disabled={disableSecondNext}
                         >
