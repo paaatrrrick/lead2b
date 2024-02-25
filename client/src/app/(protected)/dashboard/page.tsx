@@ -39,7 +39,7 @@ export default function Profile() {
     return (
         <div className='flex bg-[#08050F]'>
             <Navbar sheets={sheets} setView={setView} view={view}/>
-            <div className='flex flex-col h-screen w-full justify-start items-center p-[40px] ml-[250px] gap-4'>
+            <div className='flex flex-col min-h-[100vh] w-full justify-start items-center p-[40px] ml-[250px] gap-4'>
                 <a className='flex gap-2 w-full items-center justify-center' href="/">
                     <Image
                         src="/images/sheetz.png" 
