@@ -20,6 +20,11 @@ export default function Navbar({ sheets, setView, view } : { sheets: Sheet[], se
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const removeSheetById = (id: string) => {
+        const newSheets = userSheets.filter((sheet) => sheet.id !== id);
+        setUserSheets(newSheets);
+    }
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(fireBaseAuth, (user) => {
@@ -54,7 +59,7 @@ export default function Navbar({ sheets, setView, view } : { sheets: Sheet[], se
                         {userSheets.length > 0 && <h3 className="w-full text-[12px] text-zinc-400 p-2 pb-2">Your Sheets</h3>}
                         <ul className='flex flex-col justify-center items-start text-left w-full'>
                             {userSheets.map((sheet) => (
-                                <NavbarItem key={sheet.id} active={sheet.id === view} sheetName={sheet.name} handleClick={() => setView(sheet.id)}/>
+                                <NavbarItem key={sheet.id} active={sheet.id === view} sheetName={sheet.name} handleClick={() => setView(sheet.id)} sheetID={sheet.id} removeSheet={() => {removeSheetById(sheet.id)}}/>
                             ))}
                         </ul>
                     </div>

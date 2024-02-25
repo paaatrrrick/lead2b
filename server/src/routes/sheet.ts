@@ -39,4 +39,14 @@ SheetsRouter.get('/get', Authenticate, catchAsync(async (req: RequestWithUser, r
     res.status(200).send(sheet);
 }));
 
+
+//delete sheet by
+SheetsRouter.post('/delete', Authenticate, catchAsync(async (req: RequestWithUser, res: Response, next: NextFunction) => {
+    const { id } = req.body;
+    await Sheet.findByIdAndDelete(id);
+    await User.findByIdAndUpdate(req.user._id, { $pull: { sheetIDs: id } }).exec();
+    //delete the sheet and remove the id from the user    
+    res.status(200).send('Sheet deleted');
+}));
+
 export default SheetsRouter;

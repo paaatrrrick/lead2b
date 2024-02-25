@@ -26,6 +26,7 @@ interface Endpoints {
   getSheetNames: string;
   createSheet: string;
   getSheet: string;
+  deleteSheet: string;
 }
 
 const constants : Constants = {
@@ -46,6 +47,7 @@ const constants : Constants = {
     getSheetNames: "/sheet/getNames",
     createSheet: "/sheet/create",
     getSheet: "/sheet/get",
+    deleteSheet: "/sheet/delete",
   }
 };
 

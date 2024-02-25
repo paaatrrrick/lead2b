@@ -4,7 +4,6 @@ import { Header } from '@/components/Header';
 export default function NotFound() {
   return (
     <>
-    <Header/>
       <main className='w-full'>
         <div className='flex w-full h-full justify-center items-center'>
           <div className="flex items-center justify-start mt-20">
