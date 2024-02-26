@@ -35,14 +35,11 @@ const GoogleProvider = new GoogleAuthProvider();
 
 const SignUpWithGooglePopUp = async (setError : (msg : string) => void, login = true) => {
     try {
-        console.log('we are here');
         const result = await signInWithPopup(fireBaseAuth, GoogleProvider);
         const user = result.user;
-        if (!user || !user.email || !user.displayName || !user.uid) {
+        if (!user || !user.uid) {
             throw new Error('Error creating account');
-        }
-        console.log('we are sening the request 1')
-            console.log('we are sening the request')
+        }    
         const response = await fetch(`${constants.serverUrl}${constants.endpoints.googleSignUp}`, {
             method: 'POST',
             headers: {
