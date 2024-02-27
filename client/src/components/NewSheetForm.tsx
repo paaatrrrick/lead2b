@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Sheet } from '@/types/sheet';
 import Steps from './Steps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo } from '@fortawesome/free-solid-svg-icons';
+import PromptInfoModal from './PromptInfoModal';
 
 interface NewSheetFormProps {
     setSheets: (sheets: Sheet[]) => void;
@@ -17,12 +18,13 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
     const [disableFirstNext, setDisableFirstNext] = useState(true);
     const [disableSecondNext, setDisableSecondNext] = useState(true);
     const [disableThirdNext, setDisableThirdNext] = useState(true);
-    const [currHeader, setCurrHeader] = useState('');
+    const [currColumn, setCurrColumn] = useState('');
+    const [showPromptInfo, setShowPromptInfo] = useState(false);
 
     const [formData, setFormData] = useState({
         prompt: '', 
-        headers: [],
-        name: '',
+        columns: [] as string[],
+        sheetName: '',
         rows: 0,
     });
 
@@ -30,7 +32,7 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
         e.preventDefault();
         const newFormData = { ...formData };
         //@ts-ignore
-        newFormData['columns'] = newFormData['columns'].split(',').map((item: string) => item.trim());
+        newFormData['columns'] = newFormData['columns'].map((item: string) => item.trim());
         console.log(newFormData);
         const token = await getAuthToken();
         const res = await fetch(`${constants.serverUrl}${constants.endpoints.createSheet}`, {
@@ -43,7 +45,7 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
         });
         if (!res.ok) return;
         const data = await res.json();
-        setSheets([{ id: data._id, name: newFormData.name }, ...sheets]);
+        setSheets([{ id: data._id, name: newFormData.sheetName }, ...sheets]);
         setView(data._id);
     };
 
@@ -66,17 +68,22 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
         }
     };
 
-    const addHeader = () => {
-        setFormData({ ...formData, headers: [...formData.headers] });
-        setCurrHeader('');
+    const addColumn = () => {
+        const updatedColumns: string[] = [...formData.columns];
+        updatedColumns.push(currColumn);
+        setFormData({ ...formData, columns: updatedColumns });
+        setDisableSecondNext(false);
+        setCurrColumn('');
     }
 
 
     return (
-        <form className='flex justify-between flex-col items-center gap-2 w-full h-full z-50 shadow-2xl rounded-xl p-10 bg-[#08050F] shadow-[#321b3c] drop-shadow-2xl' onSubmit={handleSubmit}>
+        <form className='relative flex justify-between flex-col items-center gap-2 w-full h-full z-50 shadow-2xl rounded-xl p-10 bg-[#08050F] shadow-[#321b3c] drop-shadow-2xl' onSubmit={handleSubmit}>
                 <Steps currentStep={currentStep-1} />
                 {currentStep > 1 && (
-                    <button className='text-brandColor text-md rounded-md w-full gap-2 flex justify-start items-center' onClick={previousStep}>
+                    <button 
+                    type='button'
+                    className='text-brandColor text-md rounded-md w-full gap-2 flex justify-start items-center' onClick={previousStep}>
                         <FontAwesomeIcon icon={faChevronLeft} />
                         <p>Back</p>
                     </button>
@@ -85,7 +92,13 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                 <div className='flex flex-col gap-10 w-full items-start justify-center w-full h-full mt-20'>
                     <div className='flex flex-col justify-center items-start gap-2 w-full'>
                         <p className='text-zinc-500 text-md'>SHEET PROMPT</p>
-                        <h2 className="text-lg text-zinc-400 font-semibold">What are you searching for?</h2>
+                        <div className='flex gap-2 items-center justify-center'>
+                            <h2 className="text-lg text-zinc-400 font-semibold">What are you searching for?</h2>
+                            {showPromptInfo && <PromptInfoModal setShowPromptInfo={setShowPromptInfo} />}
+                            {!showPromptInfo && <span className='min-w-3 min-h-3 text-sm flex justify-center items-center outline rounded-full cursor-pointer text-zinc-500 transition duration-500 hover:text-zinc-400' onClick={() => setShowPromptInfo(true)}>
+                                <FontAwesomeIcon icon={faInfo} />
+                            </span>}
+                        </div>
                     </div>
                     <div className='flex flex-col gap-5 w-full h-full'>
                         <input
@@ -100,7 +113,7 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                         required
                         />
                         <button
-                        className={`${disableFirstNext ? 'bg-[#231b3c] cursor-not-allowed' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400'} text-zinc-500 p-2 rounded-md w-full h-12`}
+                        className={`${disableFirstNext ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor'} transition duration-400 p-2 rounded-md w-full h-12`}
                         onClick={nextStep}
                         disabled={disableFirstNext}
                         >
@@ -119,53 +132,86 @@ export default function NewSheetForm({ setSheets, setView, sheets }: NewSheetFor
                     <div className='flex flex-col gap-5 w-full h-full'>
                         <input
                         type='text'
-                        placeholder='Ex. EdTech Companies In California'
+                        placeholder='Ex. Name, Contact Info, Description, CEO, etc.'
                         className='p-2 rounded-md w-full focus:border-brandColor focus:outline-none focus:ring-0 h-12'
-                        value={currHeader}
+                        value={currColumn}
                         onChange={(e) => {
-                            setDisableFirstNext(e.target.value.length === 0) 
-                            setCurrHeader(e.target.value)
+                            setCurrColumn(e.target.value)
                         }}
-                        required
                         />
                         <button
-                        className={'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400 text-zinc-500 p-2 rounded-md w-full h-12'}
-                        onClick={addHeader}
+                        type='button'
+                        className={`${currColumn.length === 0 ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor'} transition duration-400 p-2 rounded-md w-full h-12`}
+                        onClick={addColumn}
+                        disabled={currColumn.length === 0}
                         >
                             Add
                         </button>
                         <button
-                        className={`${disableSecondNext ? 'bg-[#231b3c] cursor-not-allowed' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400'} text-zinc-500 p-2 rounded-md w-full h-12`}
+                        className={`${disableSecondNext ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor'} transition duration-400 p-2 rounded-md w-full h-12`}
                         onClick={nextStep}
                         disabled={disableSecondNext}
                         >
                             Next
                         </button>
                     </div>
+                    {formData.columns.length > 0 && <div className='flex flex-col gap-2 w-full'>
+                        <p className='text-zinc-400 text-[1.15rem]'>Current Headers</p>
+                        <ul className='flex flex-col gap-2 text-md'>
+                            {formData.columns.map((col, i) => (
+                                <li className="flex gap-2 justify-start items-center">
+                                    <p className='text-zinc-500'>{i+1}.</p>
+                                    <p key={i} className='text-zinc-500'>{col}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>}
                 </div>
                 )}
                 {currentStep === 3 && (
-                    <div className='flex flex-col gap-2 w-full'>
-                        <label className='text-gray-700'>Sheet Features (comma separated)</label>
+                    <div className='flex flex-col gap-10 w-full items-start justify-center w-full h-full mt-20'>
+                    <div className='flex flex-col justify-center items-start gap-2 w-full'>
+                        <p className='text-zinc-500 text-md'>SHEET NAME</p>
+                        <h2 className="text-lg text-zinc-400 font-semibold">What should we call your sheet?</h2>
+                    </div>
+                    <div className='flex flex-col gap-5 w-full h-full'>
                         <input
-                            type='text'
-                            placeholder='Ex. Name, URL, Description, etc.'
+                        type='text'
+                        placeholder='Ex. EdTech Companies Sheet'
+                        className='p-2 rounded-md w-full focus:border-brandColor focus:outline-none focus:ring-0 h-12'
+                        value={formData.sheetName}
+                        onChange={(e) => {
+                            setDisableThirdNext(e.target.value.length === 0 || formData.rows === 0) 
+                            setFormData({ ...formData, sheetName: e.target.value })
+                        }}
+                        required
+                        />
+                    </div>
+                    <div className='flex flex-col justify-center items-start gap-2 w-full'>
+                        <p className='text-zinc-500 text-md'>SHEET RESULTS</p>
+                        <h2 className="text-lg text-zinc-400 font-semibold">How many results do you want?</h2>
+                    </div>
+                    <div className='flex flex-col gap-5 w-full h-full'>
+                        <input
+                            type='number'
+                            placeholder='Number of Rows'
                             className='p-2 rounded-md w-full'
-                            value={currHeader}
+                            value={formData.rows}
                             onChange={(e) => {
-                                setDisableThirdNext(e.target.value.length === 0);
-                                setCurrHeader(e.target.value);
+                                let value = parseInt(e.target.value);
+                                setFormData({ ...formData, rows: value < 0 ? 0 : value > 7 ? 7 : value })
+                                setDisableThirdNext(e.target.value.length === 0 || value === 0 || formData.sheetName.length === 0);
                             }}
                             required
                         />
-                        {!disableThirdNext && (
-                            <button
-                            className='bg-brandColor text-white p-2 rounded-md w-full'
-                            onClick={nextStep}
-                            >
-                                Next
-                            </button>
-                        )}
+                        <button 
+                        type='submit' 
+                        className={`${disableThirdNext ? 'bg-[#231b3c] cursor-not-allowed text-zinc-500' : 'bg-brandColor text-zinc-200 hover:bg-brandHoverColor transition duration-400'} p-2 rounded-md w-full h-12`}
+                        disabled={disableThirdNext}
+                        >
+                            Create
+                        </button>
+                    </div>
                     </div>
                 )}
 

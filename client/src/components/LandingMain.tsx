@@ -127,7 +127,7 @@ const LandingMain = () => {
         </span>
       </h1>
       <p className="text-center text-zinc-400" style={{fontFamily: 'Arial'}}>
-        Sheetz uses AI to autonomously to search the web and find leads for your business.
+        Sheetz uses AI to autonomously search the web and find leads for your business.
       </p>
       <div className="flex flex-col justify-center items-center w-full h-full p-10 gap-2">
         <p className="text-center text-zinc-300 text-[18px]">{displayedText}{showCursor && <>|</>}</p>
