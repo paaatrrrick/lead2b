@@ -119,7 +119,7 @@ const LandingMain = () => {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center h-auto w-full p-28 text-white">
+    <div className="flex flex-col justify-start items-center h-full w-full p-28 text-white">
       <h1 className='glowing-head header' style={{ opacity: 1, transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg)', transformStyle: 'preserve-3d' }}>
         Cut The Grunt Work Out of <br /> 
         <span className=''>

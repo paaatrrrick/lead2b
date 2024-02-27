@@ -63,7 +63,7 @@ const Auth = ({isLogin}: AuthProps) => {
                 <h1 className="text-2xl font-medium text-white">{screen}</h1>
                 <a href={hrefLink} className="font-normal text-sm text-primary3 text-white underline">{switchAuthScreen}</a>
             </div>
-            <form 
+            {/* <form 
                 className="flex flex-col items-center justify-between w-full"
                 onSubmit={(event) => {
                     event.preventDefault();
@@ -104,7 +104,7 @@ const Auth = ({isLogin}: AuthProps) => {
                 >
                     {capitalizeFirstLetter(screen)}
                 </button>
-                </form>
+                </form> */}
 
 
             <button className="border border-gray-500 rounded-md h-12 px-3 w-full flex items-center justify-start text-gray-500 bg-white text-base font-light mt-4 hover:bg-blue-100 cursor-pointer" onClick={() => {SignUpWithGooglePopUp(setError, isLogin)}}>
